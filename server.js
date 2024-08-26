@@ -1,35 +1,43 @@
 require('dotenv').config();
 const express = require('express');
-const multer = require('multer');
-const bodyParser = require('body-parser');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 
-const RouterPredict = require('./routes/predict');
+const RouterPredict = require('./routes/Predict');
+const RouterSampah = require('./routes/Sampah');
 const InputError = require('./exception/InputError');
 
 const app = express();
 
-app.use('/models', RouterPredict);
-
+// Middleware
+app.use(express.static(__dirname));
 app.use(cors());
 app.use(bodyParser.json({ limit: '1mb' }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json()); // Middleware untuk parsing URL-encoded body
 
+// Rute
+app.use('/models', RouterPredict);
+app.use('/sampah', RouterSampah);
+
+// Error Handling Middleware
 app.use((err, req, res, next) => {
   if (err instanceof InputError) {
-    res.status(err.statusCode).json({
+    return res.status(err.statusCode).json({
       status: 'fail',
       message: `${err.message}`,
     });
-  } else if (err.status) {
-    res.status(err.status).json({
+  }
+  if (err.status) {
+    return res.status(err.status).json({
       status: 'fail',
       message: err.message,
     });
-  } else {
-    next(err);
   }
+  next(err);
 });
 
+// Error Handling Middleware untuk Internal Server Error
 app.use((err, req, res, next) => {
   if (res.headersSent) {
     return next(err);

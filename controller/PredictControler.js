@@ -1,24 +1,18 @@
-// const fs = require('fs');
-// const crypto = require('crypto');
-// const base64Img = require('base64-img');
-const { predictImageClassification } = require('../services/predictService');
+const { predictImageClassification } = require('../services/PredictService');
 const InputError = require('../exception/InputError');
 
 async function predictImage(req, res, next) {
   try {
-    // Pastikan bahwa file diunggah dengan benar
     if (!req.file || !req.file.buffer) {
       throw new InputError('No image file provided', 400);
     }
 
-    // Konversi buffer ke base64
     const imageBase64 = req.file.buffer.toString('base64');
 
     if (req.file.size > 1000000) {
       throw new InputError('File size exceeds 1MB', 413);
     }
     try {
-      // Kirim permintaan ke layanan prediksi
       const predictions = await predictImageClassification(imageBase64);
 
       const labelMapping = {
@@ -32,13 +26,12 @@ async function predictImage(req, res, next) {
         'sisa-makanan': { type: 'Organik', recycleStatus: 'Tidak' },
       };
 
-      const formattedPredictions = predictions.displayNames.map((label, index) => {
+      const formattedPredictions = predictions.displayNames.map((label) => {
         const { type, recycleStatus } = labelMapping[label] || { type: 'Unknown', recycleStatus: 'Unknown' };
         return {
           name: label,
           type,
           recycleStatus,
-          // confidence: predictions.confidences[index],
         };
       });
 

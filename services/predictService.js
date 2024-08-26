@@ -33,7 +33,6 @@ async function predictImageClassification(imageBase64) {
     const response = await axios.post(endpoint, requestPayload, options);
     return response.data.predictions[0];
   } catch (error) {
-    // Jika terjadi error saat melakukan request ke API, tambahkan pesan error yang lebih jelas
     throw new Error(`Error saat mengirim permintaan prediksi: ${error.message}`);
   }
 }
