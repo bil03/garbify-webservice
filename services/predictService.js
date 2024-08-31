@@ -2,11 +2,8 @@ const axios = require('axios');
 const { execSync } = require('child_process');
 
 async function predictImageClassification(imageBase64) {
-  const project = process.env.PROJECT;
-  const endpointId = process.env.ENDPOINTID;
-  const location = process.env.LOCATION;
 
-  const endpoint = `https://${location}-aiplatform.googleapis.com/v1/projects/${project}/locations/${location}/endpoints/${endpointId}:predict`;
+  const endpoint = process.env.ENDPOINT;
 
   const requestPayload = {
     instances: [
