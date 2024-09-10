@@ -20,6 +20,7 @@
     "express": "^4.19.2",
     "firebase": "^10.13.0",
     "firebase-admin": "^12.4.0",
+    "google-auth-library": "^9.14.0",
     "multer": "^1.4.5-lts.1",
     "uuid": "^10.0.0"
   },

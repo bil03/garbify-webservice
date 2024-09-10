@@ -1,4 +1,4 @@
-const { bucket } = require('../config/firebaseConfig');
+const { bucket } = require('../config/FirebaseConfig');
 const Sampah = require('../models/Sampah');
 const { v4: uuidv4 } = require('uuid');
 const InputError = require('../exception/InputError');

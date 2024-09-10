@@ -2,7 +2,6 @@ const axios = require('axios');
 const { execSync } = require('child_process');
 
 async function predictImageClassification(imageBase64) {
-
   const endpoint = process.env.ENDPOINT;
 
   const requestPayload = {
@@ -12,7 +11,7 @@ async function predictImageClassification(imageBase64) {
       },
     ],
     parameters: {
-      confidenceThreshold: 0.1,
+      confidenceThreshold: 0.15,
       maxPredictions: 5,
     },
   };

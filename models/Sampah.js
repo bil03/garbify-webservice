@@ -1,4 +1,4 @@
-const { db } = require('../config/firebaseConfig');
+const { db } = require('../config/FirebaseConfig');
 
 class Sampah {
   constructor(id, imageUrl, category, type, recyclable, description, handling1, handling2) {
